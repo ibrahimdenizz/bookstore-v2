@@ -1,3 +1,9 @@
+# Online Store Using AWS, React, and Stripe
+
+Course Link: https://www.youtube.com/watch?v=JgwI22y_eFA
+
+Channel Link: https://www.youtube.com/channel/UC8butISFwT-Wl7EV0hUK0BQ
+
 # Notes
 
 Folder directory for lambda functions: amplify/backend/functions
