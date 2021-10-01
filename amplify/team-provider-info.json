@@ -14,6 +14,16 @@
     "categories": {
       "auth": {
         "bookstorev26ea60b86": {}
+      },
+      "function": {
+        "createOrder": {
+          "deploymentBucketName": "amplify-bookstorev2-prod-102213-deployment",
+          "s3Key": "amplify-builds/createOrder-52352b685236646c672f-build.zip"
+        },
+        "processPayment": {
+          "deploymentBucketName": "amplify-bookstorev2-prod-102213-deployment",
+          "s3Key": "amplify-builds/processPayment-4f584f676e2f797a4d6e-build.zip"
+        }
       }
     }
   }
