@@ -18,12 +18,12 @@
       "function": {
         "createOrder": {
           "deploymentBucketName": "amplify-bookstorev2-prod-102213-deployment",
-          "s3Key": "amplify-builds/createOrder-447778515441616b7871-build.zip",
+          "s3Key": "amplify-builds/createOrder-33614f634d364c705832-build.zip",
           "secretsPathAmplifyAppId": "d1jmdind7fm900"
         },
         "processPayment": {
           "deploymentBucketName": "amplify-bookstorev2-prod-102213-deployment",
-          "s3Key": "amplify-builds/processPayment-34786b2b384155547534-build.zip",
+          "s3Key": "amplify-builds/processPayment-5a4f774d4e6669645370-build.zip",
           "secretsPathAmplifyAppId": "d1jmdind7fm900"
         }
       }

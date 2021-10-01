@@ -63,12 +63,18 @@
               "authenticationType": "API_KEY",
               "apiKeyConfig": {
                 "apiKeyExpirationDays": 365,
-                "description": "Guest user access to books"
+                "description": "Guest users access to books"
               }
             }
           ]
         }
       }
+    }
+  },
+  "hosting": {
+    "S3AndCloudFront": {
+      "service": "S3AndCloudFront",
+      "providerPlugin": "awscloudformation"
     }
   }
 }

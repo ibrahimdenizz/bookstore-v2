@@ -1,22 +1,11 @@
 const aws = require("aws-sdk");
 
-const { Parameters } = await new aws.SSM()
-  .getParameters({
-    Names: ["USER_POOL_ID", "STRIP_PRIVATE_KEY"].map(
-      (secretName) => process.env[secretName]
-    ),
-    WithDecryption: true,
-  })
-  .promise();
-
-// Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
-
-const USER_POOL_ID = Parameters[0].Value;
-const STRIPE_PRIVATE_KEY = Parameters[1].Value;
+var USER_POOL_ID;
+var STRIPE_PRIVATE_KEY;
 
 const { CognitoIdentityServiceProvider } = require("aws-sdk");
 const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider();
-const stripe = require("stripe")(STRIP_PRIVATE_KEY);
+const stripeLib = require("stripe");
 
 const getUserEmail = async (event) => {
   const params = {
@@ -40,6 +29,20 @@ const getUserEmail = async (event) => {
  */
 exports.handler = async (event) => {
   try {
+    const { Parameters } = await new aws.SSM()
+      .getParameters({
+        Names: ["USER_POOL_ID", "STRIP_PRIVATE_KEY"].map(
+          (secretName) => process.env[secretName]
+        ),
+        WithDecryption: true,
+      })
+      .promise();
+
+    // Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
+    USER_POOL_ID = Parameters[1].Value;
+    STRIP_PRIVATE_KEY = Parameters[0].Value;
+    const stripe = new stripeLib(STRIP_PRIVATE_KEY);
+
     const { id, cart, total, address, token } = event.arguments.input;
     const { username } = event.identity.claims;
     const email = await getUserEmail(event);

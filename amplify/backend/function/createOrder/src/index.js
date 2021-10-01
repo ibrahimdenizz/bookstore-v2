@@ -1,23 +1,12 @@
 const aws = require("aws-sdk");
 
-const { Parameters } = await new aws.SSM()
-  .getParameters({
-    Names: ["ORDER_TABLE_NAME", "BOOK_ORDER_TABLE_NAME"].map(
-      (secretName) => process.env[secretName]
-    ),
-    WithDecryption: true,
-  })
-  .promise();
-
-// Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
-
 const { v4: uuidv4 } = require("uuid");
 const AWS = require("aws-sdk");
 const documentClient = new AWS.DynamoDB.DocumentClient();
 
-const ORDER_TABLE = Parameters[0].Value;
+var ORDER_TABLE;
 const ORDER_TYPE = "Order";
-const BOOK_ORDER_TABLE = Parameters[1].Value;
+var BOOK_ORDER_TABLE;
 const BOOK_ORDER_TYPE = "BookOrder";
 
 const createOrder = async (payload) => {
@@ -72,6 +61,19 @@ const createBookOrder = async (payload) => {
  */
 exports.handler = async (event) => {
   try {
+    const { Parameters } = await new aws.SSM()
+      .getParameters({
+        Names: ["ORDER_TABLE_NAME", "BOOK_ORDER_TABLE_NAME"].map(
+          (secretName) => process.env[secretName]
+        ),
+        WithDecryption: true,
+      })
+      .promise();
+
+    // Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
+    ORDER_TABLE = Parameters[0].Value;
+    BOOK_ORDER_TABLE = Parameters[1].Value;
+
     let payload = event.prev.result;
     payload.order_id = uuidv4();
 
