@@ -1,7 +1,22 @@
+const aws = require("aws-sdk");
+
+const { Parameters } = await new aws.SSM()
+  .getParameters({
+    Names: ["USER_POOL_ID", "STRIP_PRIVATE_KEY"].map(
+      (secretName) => process.env[secretName]
+    ),
+    WithDecryption: true,
+  })
+  .promise();
+
+// Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
+
+const USER_POOL_ID = Parameters[0].Value;
+const STRIPE_PRIVATE_KEY = Parameters[1].Value;
+
 const { CognitoIdentityServiceProvider } = require("aws-sdk");
 const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider();
-const USER_POOL_ID = "<userpool_id>";
-const stripe = require("stripe")("<strip_private_key>");
+const stripe = require("stripe")(STRIP_PRIVATE_KEY);
 
 const getUserEmail = async (event) => {
   const params = {

@@ -1,3 +1,7 @@
 {
-  "lambdaLayers": []
+  "lambdaLayers": [],
+  "secretNames": [
+    "ORDER_TABLE_NAME",
+    "BOOK_ORDER_TABLE_NAME"
+  ]
 }
